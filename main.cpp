@@ -128,6 +128,10 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	char name[] = "이슬";
+	char mobile[] = "1509";
+	printf("[bob11]send-arp[%s%s]", name, mobile);
+
 	char* dev = argv[1];
 	char errbuf[PCAP_ERRBUF_SIZE];
 	pcap_t* handle = pcap_open_live(dev, BUFSIZ, 1, 1, errbuf);
