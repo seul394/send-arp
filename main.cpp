@@ -140,15 +140,13 @@ int main(int argc, char* argv[]) {
 
 	char my_ip_str[40];
 	GetInterfaceIpAddress(dev, my_ip_str);	// 내 ip 알아내기
-	printf("my ip: %s\n", my_ip_str);
 
 	char my_mac_str[50];
 	GetInterfaceMacAddress(dev, my_mac_str); // 내 mac 알아내기
-	printf("my mac: %s\n", my_mac_str); // 함수 안에서만 출력됨
 	
 	char* sender_ip_str = argv[2];
 	SendPacketToSender(handle, my_mac_str, my_ip_str, sender_ip_str); // sender에게 패킷 보내기
-
+	
 	Mac sender_mac = GetPacketFromSender(handle, sender_ip_str); // sender의 Mac 주소 알아내기
 
 	char* target_ip_str = argv[3];	// gateway의 ip 주소
@@ -165,7 +163,7 @@ int main(int argc, char* argv[]) {
 	packet.arp_.hln_ = Mac::SIZE;
 	packet.arp_.pln_ = Ip::SIZE;
 	packet.arp_.op_ = htons(ArpHdr::Request);
-	packet.arp_.smac_ = Mac(my_mac_str); // 내 ip
+	packet.arp_.smac_ = Mac(my_mac_str); // 내 mac
 	packet.arp_.sip_ = htonl(Ip(target_ip_str)); // gateway ip
 	packet.arp_.tmac_ = sender_mac; // sender mac
 	packet.arp_.tip_ = htonl(Ip(sender_ip_str)); // sender ip
